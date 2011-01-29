@@ -19,6 +19,7 @@ using System.Text;
 using System.Diagnostics;
 
 using System.Reflection;
+using Microsoft.Scripting.Ast;
 
 namespace System.Dynamic.Utils {
     /// <summary>
@@ -40,6 +41,8 @@ namespace System.Dynamic.Utils {
 			new CacheDict <MethodBase, ParameterInfo[]>.KeyInfo (null, null);
 			new Dictionary <Type, CacheDict<Type, MethodInfo>.KeyInfo> ();
 			new CacheDict <Type, MethodInfo>.KeyInfo (null, null);
+			new Dictionary <Type, CacheDict<Type, Expression.LambdaFactory>.KeyInfo> ();
+			new CacheDict<Type, Expression.LambdaFactory>.KeyInfo (null, null);
 		}
 	}
 

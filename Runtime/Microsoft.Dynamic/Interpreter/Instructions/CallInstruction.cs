@@ -234,6 +234,10 @@ namespace Microsoft.Scripting.Interpreter {
             _argumentCount = argumentCount;
         }
         
+	public override object Invoke(object arg) {
+            return InvokeWorker(new object [] {arg});
+        }
+
         public override object Invoke(params object[] args) {
             return InvokeWorker(args);
         }

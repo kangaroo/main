@@ -45,6 +45,10 @@ namespace Microsoft.Scripting.Interpreter {
             }
         }
 
+        public virtual object Invoke(object args) {
+            throw new InvalidOperationException();
+        }
+
         public virtual object Invoke(params object[] args) {
             switch(args.Length) {
                 default: throw new InvalidOperationException();

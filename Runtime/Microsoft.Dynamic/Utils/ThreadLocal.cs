@@ -175,17 +175,19 @@ namespace Microsoft.Scripting.Utils {
 #if !SILVERLIGHT
             Thread.BeginCriticalRegion();
 #endif
-            StorageInfo[] curStorage = Updating;
+            StorageInfo[] curStorage = _stores;
             try {
                 int threadId = GetCurrentThreadId();
                 StorageInfo newInfo = new StorageInfo(Thread.CurrentThread);
 
+/*
                 // set to updating while potentially resizing/mutating, then we'll
                 // set back to the current value.                                        
                 while ((curStorage = Interlocked.Exchange(ref _stores, Updating)) == Updating) {
                     // another thread is already updating...
                     Thread.Sleep(0);
                 }
+*/
 
                 // check and make sure we have a space in the array for our value
                 if (curStorage == null) {
@@ -207,10 +209,13 @@ namespace Microsoft.Scripting.Utils {
 
                 return curStorage[threadId] = newInfo;
             } finally {
+/*
                 if (curStorage != Updating) {
                     // let others access the storage again
                     Interlocked.Exchange(ref _stores, curStorage);
                 }
+*/
+		_stores = curStorage;
 #if !SILVERLIGHT
                 Thread.EndCriticalRegion();
 #endif

@@ -11,7 +11,7 @@
     <RootNamespace>Microsoft.Scripting</RootNamespace>
     <AssemblyName>Microsoft.Dynamic</AssemblyName>
     <DocumentationFile>$(SolutionDir)..\bin\$(Configuration)\Microsoft.Dynamic.xml</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsNotAsErrors>618</WarningsNotAsErrors>
     <NoWarn>1591</NoWarn>
     <BaseAddress>859832320</BaseAddress>

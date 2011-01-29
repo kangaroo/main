@@ -704,7 +704,7 @@ namespace IronRuby.Builtins {
             bool result = false;
             var key = Key.Create(type, methodName, isStatic);
 
-            var cache = Interlocked.Exchange(ref _clrFailedMemberLookupCache, null);
+            var cache = _clrFailedMemberLookupCache;
             if (cache != null) {
                 int cachedExtensionVersion;
                 if (cache.TryGetValue(key, out cachedExtensionVersion)) {
@@ -718,8 +718,6 @@ namespace IronRuby.Builtins {
                 } else {
                     result = false;
                 }
-
-                Interlocked.Exchange(ref _clrFailedMemberLookupCache, cache);
             }
 
 #if DEBUG
@@ -730,10 +728,9 @@ namespace IronRuby.Builtins {
 
         private static void CacheFailure(Type/*!*/ type, string/*!*/ methodName, bool isStatic, int extensionVersion) {
             // store failure to the cache if the cache is not owned by another thread:
-            var cache = Interlocked.Exchange(ref _clrFailedMemberLookupCache, null);
+            var cache = _clrFailedMemberLookupCache;
             if (cache != null) {
                 cache[Key.Create(type, methodName, isStatic)] = extensionVersion;
-                Interlocked.Exchange(ref _clrFailedMemberLookupCache, cache);
             }
         }
 

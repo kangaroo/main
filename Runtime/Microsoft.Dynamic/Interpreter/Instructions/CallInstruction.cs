@@ -182,6 +182,11 @@ namespace Microsoft.Scripting.Interpreter {
             return pi.Length != index || (pi.Length == index && !target.IsStatic);
         }
 
+        // work around the bootstrap issue where we no longer generate this
+        private static CallInstruction FastCreate(MethodInfo info, ParameterInfo[] pis) {
+            throw new Exception ("how did we get here?");
+        }
+
         /// <summary>
         /// Uses reflection to create new instance of the appropriate ReflectedCaller
         /// </summary>

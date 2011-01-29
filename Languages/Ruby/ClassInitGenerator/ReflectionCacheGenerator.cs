@@ -207,7 +207,7 @@ internal sealed class ReflectionCacheGenerator : Generator {
             var ps = method.GetParameters();
 
             if (!method.IsGenericMethod && method.IsStatic && CollectionUtils.TrueForAll(ps, (p) => !p.ParameterType.IsByRef) &&
-                !((EmittedAttribute)method.GetCustomAttributes(typeof(EmittedAttribute), false)[0]).UseReflection) {
+                !((EmittedAttribute)method.GetCustomAttributes(typeof(EmittedAttribute), false)[0]).UseReflection && false) {
 
                 Type[] types = ReflectionUtils.GetParameterTypes(ps);
                 string delegateType;

@@ -18,6 +18,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 
+using System.Reflection;
+using Microsoft.Scripting.Interpreter;
+
 namespace Microsoft.Scripting.Utils {
     /// <summary>
     /// Provides a dictionary-like object used for caches which holds onto a maximum
@@ -29,6 +32,15 @@ namespace Microsoft.Scripting.Utils {
         private readonly Dictionary<TKey, KeyInfo> _dict = new Dictionary<TKey, KeyInfo>();
         private readonly LinkedList<TKey> _list = new LinkedList<TKey>();
         private readonly int _maxSize;
+
+	static bool trickAotFlag = false;
+
+	static CacheDict () {
+		if (trickAotFlag) {
+			new Dictionary <Type, CacheDict<Type, Func<LightLambda, Delegate>>.KeyInfo> ();
+			new CacheDict<Type, Func<LightLambda, Delegate>>.KeyInfo (null, null);
+		}
+	}
 
         /// <summary>
         /// Creates a dictionary-like object used for caches.

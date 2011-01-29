@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 
+using System.Reflection;
+
 namespace System.Dynamic.Utils {
     /// <summary>
     /// Provides a dictionary-like object used for caches which holds onto a maximum
@@ -29,6 +31,17 @@ namespace System.Dynamic.Utils {
         private readonly Dictionary<TKey, KeyInfo> _dict = new Dictionary<TKey, KeyInfo>();
         private readonly LinkedList<TKey> _list = new LinkedList<TKey>();
         private readonly int _maxSize;
+
+	static bool trickAotFlag = false;
+
+	static CacheDict () {
+		if (trickAotFlag) {
+			new Dictionary <MethodBase, CacheDict<MethodBase, ParameterInfo []>.KeyInfo> ();
+			new CacheDict <MethodBase, ParameterInfo[]>.KeyInfo (null, null);
+			new Dictionary <Type, CacheDict<Type, MethodInfo>.KeyInfo> ();
+			new CacheDict <Type, MethodInfo>.KeyInfo (null, null);
+		}
+	}
 
         /// <summary>
         /// Creates a dictionary-like object used for caches.
